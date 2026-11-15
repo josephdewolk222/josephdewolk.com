@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph De Wolk</title>
+<meta name="description" content="Joseph De Wolk. Creative, determined, optimist. Berkeley, Calif.">
+<link rel="canonical" href="https://josephdewolk.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://josephdewolk.com/">
+<meta property="og:title" content="Joseph De Wolk">
+<meta property="og:description" content="Creative, determined, optimist. Berkeley, Calif.">
+<meta property="og:image" content="https://josephdewolk.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9D%A4%EF%B8%8F%E2%80%8D%F0%9F%94%A5%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #F6E3E6;   /* pink */
+    --ink: #46688F;  /* blue */
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color: var(--ink); transition: background .6s, color .6s; }
+  html { font-size: 18px; }
+  body {
+    margin: 0;
+    font: 1rem/1.55 Georgia, "Times New Roman", Times, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--ink); color: var(--bg); }
+  main { max-width: 34rem; margin: 0 auto; padding: 12vh 1.5rem 0; }
+
+  h1 { font-weight: normal; font-size: 1.15em; margin: 0; letter-spacing: .01em; }
+  .lede { margin: .2em 0 0; font-style: italic; }
+
+  .wall { margin: 9vh 0 0; width: 100vw; margin-left: calc(50% - 50vw); }
+  .wall canvas { display: block; width: 100%; height: 90px; }
+  .wall figcaption {
+    max-width: 31rem; margin: 1.2em 0 0; padding: 0;
+    margin-left: max(1.5rem, calc(50vw - 15.5rem));
+    font: 13px/1.6 "Courier New", Courier, monospace;
+  }
+  .wall .t { display: block; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .3em; }
+  .wall .credit { display: block; margin-top: .6em; opacity: .75; }
+
+  h2 {
+    font: 13px/1 "Courier New", Courier, monospace;
+    text-transform: uppercase; letter-spacing: .08em;
+    margin: 4.5em 0 1em; font-weight: normal;
+  }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { margin: 0 0 .65em; padding-left: 1.4em; text-indent: -1.4em; }
+  li::before { content: "\2014\00a0\00a0"; }
+
+  a { color: inherit; text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: 1px; }
+  a:hover { background: var(--ink); color: var(--bg); text-decoration: none; }
+
+  .contact { margin: 1.55em 0 0; }   /* one empty line */
+  footer {
+    max-width: 34rem; margin: 0 auto; padding: 1.55rem 1.5rem 6em;   /* one empty line */
+    font: 13px/1.7 "Courier New", Courier, monospace;
+  }
+  .swatches { display: inline-flex; flex-wrap: wrap; gap: .7em; vertical-align: middle; }
+  .swatches button {
+    width: 30px; height: 14px; padding: 0; cursor: pointer;
+    border: 1px solid var(--ink); display: inline-flex;
+  }
+  .swatches button span { flex: 1; }
+  .swatches button[aria-pressed="true"] { outline: 1px solid var(--ink); outline-offset: 3px; }
+
+  /* wide screens: the instructions become a museum label beside the work */
+  @media (min-width: 1180px) {
+    .wall { position: relative; margin-bottom: 0; }
+    .wall figcaption {
+      position: absolute; top: calc(100% + 55px); margin: 0;
+      left: calc(50vw + 17rem + 3rem); width: min(15rem, calc(50vw - 17rem - 5rem));
+    }
+  }
+  @media (max-width: 520px) { html { font-size: 17px; } main { padding-top: 8vh; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Joseph De&nbsp;Wolk</h1>
+  <p class="lede">Creative, determined, optimist | Berkeley, Calif.</p>
+
+  <figure class="wall">
+    <canvas id="wall" aria-hidden="true"></canvas>
+    <figcaption>
+      <span class="t" id="wd-title">Wall Drawing</span>
+      <span id="wd-text"></span>
+      <span class="credit" id="status"></span>
+    </figcaption>
+  </figure>
+
+  <h2>About me</h2>
+  <ul>
+    <li>Research Programs at <a href="https://constellation.org/">Constellation Institute</a>, an independent nonprofit research center in Berkeley working to make sure AI doesn&rsquo;t kill a lot of people and concentrate power and wealth into the hands of a few.</li>
+    <li>Producing <a href="https://madeforyoufilm.com/"><i>Made For You</i></a>, a documentary about humans in romantic love with an AI companion. Releasing in 2027.</li>
+    <li>Volunteer with <a href="https://ibme.com/">Inward Bound Mindfulness Education</a>, a national nonprofit running meditation retreats for teenagers in the Insight lineage.</li>
+    <li>UCLA, MIT, and Engaged Mindfulness Institute alumnus.</li>
+    <li>My favorite things include surfing, chess, great books (especially used copies), theology, Bahasa Indonesia, Mumbai local trains, mindfulness and meditation, playing soccer, East Bay history and culture, political organizing, Michel de Montaigne, redwood trees, Sol LeWitt, public narrative and storytelling, and Curtis Mayfield.</li>
+  </ul>
+
+  <p class="contact">
+    <a href="https://www.linkedin.com/in/josdewolk/">LinkedIn</a><br>
+    <a href="https://medium.com/@josdewolk">Medium</a><br>
+    <a id="note" href="#">Send me a note</a>
+  </p>
+</main>
+
+<footer>
+  <span class="swatches" role="group" aria-label="Color scheme">
+    <button data-p="pink" title="pink &amp; blue" aria-label="Color scheme: pink &amp; blue"><span style="background:#F6E3E6"></span><span style="background:#46688F"></span></button>
+    <button data-p="library" title="green &amp; creme" aria-label="Color scheme: green &amp; creme"><span style="background:#2F4A3A"></span><span style="background:#EFE6D0"></span></button>
+    <button data-p="burgundy" title="burgundy &amp; gold" aria-label="Color scheme: burgundy &amp; gold"><span style="background:#6E1F2A"></span><span style="background:#CDAE6A"></span></button>
+    <button data-p="greyred" title="dark grey &amp; red" aria-label="Color scheme: dark grey &amp; red"><span style="background:#1E1E1E"></span><span style="background:#D17277"></span></button>
+    <button data-p="highlighter" title="highlighter" aria-label="Color scheme: highlighter"><span style="background:#F2FF3D"></span><span style="background:#4A12B8"></span></button>
+  </span>
+</footer>
+
+<script>
+(() => {
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+
+  /* ---------- two colors ---------- */
+  const PALETTES = {
+    pink: ['#F6E3E6', '#46688F'],
+    library: ['#2F4A3A', '#EFE6D0'],
+    burgundy: ['#6E1F2A', '#CDAE6A'],
+    greyred: ['#1E1E1E', '#D17277'],
+    highlighter: ['#F2FF3D', '#4A12B8']
+  };
+  const root = document.documentElement;
+  const buttons = document.querySelectorAll('.swatches button');
+  function applyPalette(name) {
+    if (!PALETTES[name]) name = 'pink';
+    const p = PALETTES[name];
+    root.style.setProperty('--bg', p[0]);
+    root.style.setProperty('--ink', p[1]);
+    buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.p === name));
+    store.set('jd-palette', name);
+    if (render) size(); else draw();
+  }
+  buttons.forEach(b => b.addEventListener('click', () => applyPalette(b.dataset.p)));
+
+  /* ---------- the wall drawings ----------
+     EDIT THE INSTRUCTIONS HERE. Each drawing: its number, canvas height (px),
+     the instruction text, and the routine that carries it out.
+     Preview one by adding #wd=3 (etc.) to the URL.                        */
+  const DRAWINGS = [
+    { n: 1, h: 90,  dur: 240, make: line,
+      text: 'Draw a line, not straight, from the left edge to the right edge, slowly, as if by hand.' },
+    { n: 2, h: 300, dur: 240, make: circles,
+      text: 'Draw a circle over minutes. If it does not close, leave it. Then draw another one inside the last. Do this until the last circle drawn is just a dot, then stop.' },
+    { n: 3, h: 300, dur: 83,  make: grid,
+      text: 'Draw a grid of forty-two squares. Fill in one square every second, at random. Then remove one every second until only one is left.' },
+    { n: 4, h: 260, dur: 600, make: blackout,
+      text: 'Draw short straight lines, one at a time, in any direction, as if by hand. Begin the next line close to the end of the last one but not touching. Continue until the wall is black.' },
+    { n: 5, h: 260, dur: 240, make: corners,
+      text: 'Draw lines from the four corners toward the center. Slow down as they approach. Do not let them meet. Then draw each line to a different corner from where it started.' },
+    { n: 6, h: 260, dur: 240, make: stack,
+      text: 'Draw horizontal lines, stacked closely. Make each a little less sure of itself than the previous line.' }
+  ];
+  const KEY = 'jd-walls-v3';
+  const TAU = Math.PI * 2;
+
+  const canvas = document.getElementById('wall');
+  const ctx = canvas.getContext('2d');
+  const titleEl = document.getElementById('wd-title');
+  const textEl = document.getElementById('wd-text');
+  const statusEl = document.getElementById('status');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const inkNow = () => getComputedStyle(root).getPropertyValue('--ink').trim();
+
+  function mulberry32(a) {
+    return () => {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  const newSeed = () => (Math.random() * 2 ** 32) >>> 0;
+  function shuffle(a, r) {
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+  function wobble(r, ks, amp) {          // a smooth, seeded not-straightness
+    const w = ks.map((k, i) => ({ f: k * (1.2 + r() * 1.6), ph: r() * TAU, a: 1 / (i + 1) ** 1.3 }));
+    const norm = w.reduce((s, x) => s + x.a, 0);
+    return u => amp * w.reduce((s, x) => s + x.a * Math.sin(u * x.f * TAU + x.ph), 0) / norm;
+  }
+  function pen(x, y, t) {               // the pen, breathing a little
+    ctx.beginPath(); ctx.arc(x, y, 2.6 + Math.sin(t / 700) * 0.5, 0, TAU); ctx.fill();
+  }
+
+  /* #1 */
+  function line(r, W, H) {
+    const y = wobble(r, [1, 2, 3, 5], H * 0.28), mid = H / 2;
+    return (p, t) => {
+      const end = p * W;
+      ctx.beginPath(); ctx.moveTo(0, mid + y(0));
+      for (let x = 1; x <= end; x++) ctx.lineTo(x, mid + y(x / W));
+      ctx.stroke();
+      if (p < 1) pen(end, mid + y(end / W), t);
+    };
+  }
+  /* #2 */
+  function circles(r, W, H) {
+    const cx = W / 2, cy = H / 2, rings = [];
+    for (let R = Math.min(W, H) * 0.44; R > 5; R *= 0.8)
+      rings.push({ R, a0: r() * TAU, sweep: TAU * (0.9 + r() * 0.08), rw: wobble(r, [1, 2, 4], 0.035) });
+    const lens = rings.map(g => g.R * g.sweep), DOT = 25;
+    const total = lens.reduce((a, b) => a + b, 0) + DOT;
+    const pt = (g, s) => { const a = g.a0 + s * g.sweep, rr = g.R * (1 + g.rw(s)); return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]; };
+    return (p, t) => {
+      let L = p * total;
+      for (let k = 0; k < rings.length && L > 0; k++) {
+        const g = rings[k], f = Math.min(1, L / lens[k]), N = Math.max(40, Math.round(g.R * 4)), n = Math.floor(f * N);
+        for (let i = 0; i < n; i++) {
+          const [x0, y0] = pt(g, i / N), [x1, y1] = pt(g, (i + 1) / N);
+          ctx.lineWidth = 2.6 - 1.6 * (i / N);       // the brush runs dry
+          ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+        }
+        if (f < 1 && p < 1) { const [x, y] = pt(g, f); pen(x, y, t); }
+        L -= lens[k];
+      }
+      if (L > 0) { ctx.beginPath(); ctx.arc(cx, cy, 3 * Math.min(1, L / DOT), 0, TAU); ctx.fill(); }
+    };
+  }
+  /* #3 */
+  function grid(r, W, H) {
+    const cols = 7, rows = 6, n = cols * rows;
+    const c = Math.min(W * 0.86 / cols, H * 0.86 / rows), x0 = (W - c * cols) / 2, y0 = (H - c * rows) / 2;
+    const fill = shuffle([...Array(n).keys()], r);
+    const survivor = fill[Math.floor(r() * n)];
+    const remove = shuffle(fill.filter(i => i !== survivor), r);
+    const cell = (i, alpha) => {
+      ctx.globalAlpha = alpha;
+      ctx.fillRect(x0 + (i % cols) * c + 3, y0 + Math.floor(i / cols) * c + 3, c - 6, c - 6);
+      ctx.globalAlpha = 1;
+    };
+    return p => {
+      ctx.lineWidth = 1; ctx.beginPath();
+      for (let i = 0; i <= cols; i++) { ctx.moveTo(x0 + i * c, y0); ctx.lineTo(x0 + i * c, y0 + rows * c); }
+      for (let i = 0; i <= rows; i++) { ctx.moveTo(x0, y0 + i * c); ctx.lineTo(x0 + cols * c, y0 + i * c); }
+      ctx.stroke();
+      const s = p * (2 * n - 1);                      // one second per square, filling then emptying
+      if (s < n) {
+        const k = Math.floor(s);
+        for (let i = 0; i < k; i++) cell(fill[i], 1);
+        if (k < n) cell(fill[k], s - k);
+      } else {
+        const u = Math.min(s - n, n - 1), k = Math.floor(u), gone = new Set(remove.slice(0, k));
+        for (let i = 0; i < n; i++) {
+          if (gone.has(i)) continue;
+          cell(i, k < n - 1 && i === remove[k] ? 1 - (u - k) : 1);
+        }
+      }
+    };
+  }
+  /* #4 */
+  function blackout(r, W, H) {
+    const LW = 4, C = 3, gw = Math.ceil(W / C), gh = Math.ceil(H / C);
+    const cov = new Uint8Array(gw * gh); let left = gw * gh;
+    const at = (x, y) => Math.min(gh - 1, Math.max(0, Math.floor(y / C))) * gw + Math.min(gw - 1, Math.max(0, Math.floor(x / C)));
+    const mark = (x, y) => {
+      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+        const gx = Math.floor(x / C) + dx, gy = Math.floor(y / C) + dy;
+        if (gx < 0 || gy < 0 || gx >= gw || gy >= gh) continue;
+        const k = gy * gw + gx; if (!cov[k]) { cov[k] = 1; left--; }
+      }
+    };
+    const segs = []; let x = r() * W, y = r() * H, target = null;
+    while (left > 0 && segs.length < 60000) {
+      let best = null, bestScore = Infinity;
+      for (let k = 0; k < 10; k++) {                  // look around for somewhere not yet black
+        const a = target && k < 4 ? Math.atan2(target[1] - y, target[0] - x) + (r() - 0.5) * 0.8 : r() * TAU;
+        const len = 6 + r() * 14, nx = x + Math.cos(a) * len, ny = y + Math.sin(a) * len;
+        if (nx < 0 || ny < 0 || nx > W || ny > H) continue;
+        const score = cov[at(nx, ny)] + cov[at((x + nx) / 2, (y + ny) / 2)] + (target && k < 4 ? -0.5 : 0);
+        if (score < bestScore) { bestScore = score; best = [nx, ny, len]; }
+      }
+      if (!best) { const a = Math.atan2(H / 2 - y, W / 2 - x); best = [x + Math.cos(a) * 8, y + Math.sin(a) * 8, 8]; }
+      if (bestScore >= 1.5 && !target) {              // boxed in: aim for a white patch
+        for (let k = 0; k < 400; k++) { const i = Math.floor(r() * cov.length); if (!cov[i]) { target = [(i % gw + 0.5) * C, (Math.floor(i / gw) + 0.5) * C]; break; } }
+      }
+      const [nx, ny, len] = best, bend = (r() - 0.5) * len * 0.3;
+      const mx = (x + nx) / 2 - (ny - y) / len * bend, my = (y + ny) / 2 + (nx - x) / len * bend;
+      segs.push([x, y, mx, my, nx, ny]);
+      for (let s = 0; s <= 1; s += 1.5 / len) {
+        const q = 1 - s; mark(q * q * x + 2 * q * s * mx + s * s * nx, q * q * y + 2 * q * s * my + s * s * ny);
+      }
+      if (target && cov[at(...target)]) target = null;
+      const ga = Math.atan2(ny - y, nx - x) + (r() - 0.5) * 2, gap = LW + 3 + r() * 3;   // close, but not touching
+      x = Math.min(W, Math.max(0, nx + Math.cos(ga) * gap)); y = Math.min(H, Math.max(0, ny + Math.sin(ga) * gap));
+    }
+    const dpr = window.devicePixelRatio || 1, buf = document.createElement('canvas');
+    buf.width = Math.round(W * dpr); buf.height = Math.round(H * dpr);
+    const b = buf.getContext('2d'); b.setTransform(dpr, 0, 0, dpr, 0, 0);
+    b.strokeStyle = inkNow(); b.fillStyle = inkNow(); b.lineWidth = LW; b.lineCap = 'round'; b.lineJoin = 'round';
+    let drawn = 0;
+    return (p, t) => {
+      const want = Math.floor(p * segs.length);
+      for (; drawn < want; drawn++) {
+        const [ax, ay, mx, my, bx, by] = segs[drawn];
+        b.beginPath(); b.moveTo(ax, ay); b.quadraticCurveTo(mx, my, bx, by); b.stroke();
+      }
+      if (p >= 1) b.fillRect(0, 0, W, H);             // and then it is black
+      ctx.drawImage(buf, 0, 0, W, H);
+      if (p < 1 && drawn > 0) { const s = segs[drawn - 1]; pen(s[4], s[5], t); }
+    };
+  }
+  /* #5 */
+  function corners(r, W, H) {
+    const cx = W / 2, cy = H / 2, stop = 0.93 + r() * 0.02;
+    const cs = [[0, 0], [W, 0], [W, H], [0, H]];
+    let to; do { to = shuffle([0, 1, 2, 3], r); } while (to.some((v, i) => v === i));
+    const P1 = 0.6;
+    return (p, t) => {
+      const a = Math.min(1, p / P1), e = (1 - (1 - a) ** 3) * stop;
+      const b = p > P1 ? (p - P1) / (1 - P1) : 0, eb = b * b * (3 - 2 * b);
+      cs.forEach(([x, y], i) => {
+        const tx = x + (cx - x) * e, ty = y + (cy - y) * e;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(tx, ty);
+        let ex = tx, ey = ty;
+        if (b > 0) { const [gx, gy] = cs[to[i]]; ex = tx + (gx - tx) * eb; ey = ty + (gy - ty) * eb; ctx.lineTo(ex, ey); }
+        ctx.stroke();
+        if (p < 1) pen(ex, ey, t);
+      });
+    };
+  }
+  /* #6 */
+  function stack(r, W, H) {
+    const N = 24, x0 = W * 0.08, span = W * 0.84, gap = H / (N + 1);
+    const ls = [...Array(N)].map((_, i) => ({
+      y: wobble(r, [1, 2, 4, 7], 0.3 + (i / (N - 1)) ** 2 * 12),   // less sure, line by line
+      len: 1 - i * 0.012 - r() * 0.015
+    }));
+    return (p, t) => {
+      const k = p * N, cur = Math.min(Math.floor(k), N - 1);
+      for (let i = 0; i <= cur; i++) {
+        const f = i < Math.floor(k) ? 1 : k - Math.floor(k), L = ls[i], end = span * L.len * f, base = gap * (i + 1);
+        ctx.beginPath(); ctx.moveTo(x0, base + L.y(0));
+        for (let x = 1; x <= end; x++) ctx.lineTo(x0 + x, base + L.y(x / span));
+        ctx.stroke();
+        if (i === cur && p < 1) pen(x0 + end, base + L.y(end / span), t);
+      }
+    };
+  }
+
+  /* ---------- which drawing, and how far along ---------- */
+  let S = store.get(KEY);
+  if (!S || typeof S !== 'object' || !S.d) S = { cur: null, d: {} };
+  const byN = n => DRAWINGS.find(d => d.n === n);
+  const forced = byN(+((location.hash.match(/wd=(\d+)/) || [])[1]));
+
+  function start(d) {
+    S.cur = d.n; S.d[d.n] = { seed: newSeed(), p: 0 };
+  }
+  function pickNew() {
+    const pool = DRAWINGS.filter(d => d.n !== S.cur);
+    start(pool[Math.floor(Math.random() * pool.length)]);
+  }
+  if (forced) start(forced);
+  else pickNew();                      // a new drawing every visit, never the last one twice
+  store.set(KEY, S);
+
+  let D, st, render, W = 0, H = 0;
+  function load() {
+    D = byN(S.cur); st = S.d[S.cur];
+    if (still) st.p = 1;
+    titleEl.textContent = 'Wall Drawing #' + D.n;
+    textEl.textContent = D.text;
+    size();
+  }
+  function size() {
+    const dpr = window.devicePixelRatio || 1;
+    W = canvas.clientWidth;
+    H = D.h <= 120 ? D.h : Math.round(Math.min(D.h, W * 0.8));
+    canvas.style.height = H + 'px';
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    render = D.make(mulberry32(st.seed), W, H);
+    draw();
+  }
+  function draw(now = performance.now()) {
+    if (!render) return;
+    const ink = getComputedStyle(root).getPropertyValue('--ink').trim();
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = ink; ctx.fillStyle = ink;
+    ctx.lineWidth = 1.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    render(st.p, now);
+  }
+
+  let shown = -1;
+  function report() {
+    const pct = Math.floor(st.p * 100);
+    if (pct === shown) return;
+    shown = pct;
+    statusEl.textContent = pct + '% complete';
+  }
+
+  let last = performance.now();
+  function tick(now) {
+    const dt = Math.min((now - last) / 1000, 0.25);   // a hidden tab doesn't count
+    last = now;
+    st.p = Math.min(1, st.p + dt / D.dur);
+    draw(now); report();
+    if (st.p < 1) requestAnimationFrame(tick);
+  }
+
+  /* the address, assembled here so it never sits in the page for robots to read */
+  document.getElementById('note').addEventListener('click', e => {
+    e.preventDefault();
+    location.href = 'mailto:' + ['jdewolk', 'gmail.com'].join('@');
+  });
+
+  load();
+  applyPalette(store.get('jd-palette') || 'pink');
+  report();
+  let lastW = innerWidth;
+  addEventListener('resize', () => { if (innerWidth !== lastW) { lastW = innerWidth; size(); } });
+  addEventListener('hashchange', () => location.reload());
+  if (st.p < 1) requestAnimationFrame(t => { last = t; tick(t); });
+})();
+</script>
+</body>
+</html>
