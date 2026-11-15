@@ -69,6 +69,17 @@
   .swatches button span { flex: 1; }
   .swatches button[aria-pressed="true"] { outline: 1px solid var(--ink); outline-offset: 3px; }
 
+
+  /* neon only: three little rays at each end of the name, hanging into the margin */
+  html[data-palette="highlighter"] h1::before,
+  html[data-palette="highlighter"] h1::after {
+    content: ""; display: inline-block; width: .55em; height: .72em; vertical-align: -.02em;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 26'%3E%3Cg stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M17 13H7'/%3E%3Cpath d='M15.5 6.5L8 2'/%3E%3Cpath d='M15.5 19.5L8 24'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 26'%3E%3Cg stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M17 13H7'/%3E%3Cpath d='M15.5 6.5L8 2'/%3E%3Cpath d='M15.5 19.5L8 24'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / contain;
+  }
+  html[data-palette="highlighter"] h1::before { margin: 0 .16em 0 -.71em; }
+  html[data-palette="highlighter"] h1::after { margin-left: .16em; transform: scaleX(-1); }
+
   /* wide screens: the instructions become a museum label beside the work */
   @media (min-width: 1180px) {
     .wall { position: relative; margin-bottom: 0; }
@@ -98,8 +109,8 @@
   <ul>
     <li>Research Programs at <a href="https://constellation.org/">Constellation Institute</a>, an independent nonprofit research center in Berkeley working to make sure AI doesn&rsquo;t kill a lot of people or concentrate power and wealth into the hands of a few.</li>
     <li>Producing <a href="https://madeforyoufilm.com/"><i>Made For You</i></a>, a documentary about humans in romantic love with an AI companion. Releasing in 2027.</li>
-    <li>Volunteer with <a href="https://ibme.com/">Inward Bound Mindfulness Education</a>, a national nonprofit running meditation retreats for teenagers in the Insight lineage.</li>
-    <li>UCLA, MIT, and Engaged Mindfulness Institute alumnus.</li>
+    <li>Volunteer with <a href="https://ibme.com/">Inward Bound Mindfulness Education</a>, a national nonprofit running meditation retreats for teens in the Insight lineage.</li>
+    <li>UCLA, MIT, and Engaged Mindfulness Institute alum.</li>
     <li>My favorite things include surfing, chess, great books (especially used copies), theology, Bahasa Indonesia, Mumbai local trains, mindfulness and meditation, playing soccer, East Bay history and culture, political organizing, Michel de Montaigne, redwood trees, Sol LeWitt, public narrative and storytelling, and Curtis Mayfield.</li>
   </ul>
 
@@ -143,6 +154,7 @@
     root.style.setProperty('--bg', p[0]);
     root.style.setProperty('--ink', p[1]);
     buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.p === name));
+    root.dataset.palette = name;
     store.set('jd-palette', name);
     if (render) size(); else draw();
   }
@@ -164,7 +176,7 @@
     { n: 5, h: 260, dur: 240, make: corners,
       text: 'Draw lines from the four corners toward the center. Slow down as they approach. Do not let them meet. Then draw each line to a different corner from where it started.' },
     { n: 6, h: 260, dur: 240, make: stack,
-      text: 'Draw horizontal lines, stacked closely. Make each a little less sure of itself than the previous line.' }
+      text: 'Draw horizontal lines, stacked very closely. Each subsequent line is a little more freehand than the previous line. Stop when any line touches the bottom of the frame.' }
   ];
   const KEY = 'jd-walls-v3';
   const TAU = Math.PI * 2;
@@ -337,19 +349,24 @@
   }
   /* #6 */
   function stack(r, W, H) {
-    const N = 24, x0 = W * 0.08, span = W * 0.84, gap = H / (N + 1);
-    const ls = [...Array(N)].map((_, i) => ({
-      y: wobble(r, [1, 2, 4, 7], 0.3 + (i / (N - 1)) ** 2 * 12),   // less sure, line by line
-      len: 1 - i * 0.012 - r() * 0.015
-    }));
+    const x0 = W * 0.08, span = W * 0.84, gap = Math.max(4, H / 44), ls = [];
+    for (let i = 0; ; i++) {                                           // keep adding lines until one would touch the bottom
+      const y = wobble(r, [1, 2, 4, 7, 11], 0.2 + 0.07 * i * i),       // a little more freehand each time
+            len = 1 - i * 0.004 - r() * 0.01, base = gap * (i + 1);
+      let low = -Infinity;
+      for (let u = 0; u <= 1; u += 1 / 200) low = Math.max(low, base + y(u * len));
+      ls.push({ y, len, base });
+      if (low >= H - 1 || i > 400) break;                              // this one touches: it is the last
+    }
+    const N = ls.length;
     return (p, t) => {
       const k = p * N, cur = Math.min(Math.floor(k), N - 1);
       for (let i = 0; i <= cur; i++) {
-        const f = i < Math.floor(k) ? 1 : k - Math.floor(k), L = ls[i], end = span * L.len * f, base = gap * (i + 1);
-        ctx.beginPath(); ctx.moveTo(x0, base + L.y(0));
-        for (let x = 1; x <= end; x++) ctx.lineTo(x0 + x, base + L.y(x / span));
+        const f = i < Math.floor(k) ? 1 : k - Math.floor(k), L = ls[i], end = span * L.len * f;
+        ctx.beginPath(); ctx.moveTo(x0, L.base + L.y(0));
+        for (let x = 1; x <= end; x++) ctx.lineTo(x0 + x, L.base + L.y(x / span));
         ctx.stroke();
-        if (i === cur && p < 1) pen(x0 + end, base + L.y(end / span), t);
+        if (i === cur && p < 1) pen(x0 + end, L.base + L.y(end / span), t);
       }
     };
   }
