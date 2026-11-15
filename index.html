@@ -96,7 +96,7 @@
 
   <h2>About me</h2>
   <ul>
-    <li>Research Programs at <a href="https://constellation.org/">Constellation Institute</a>, an independent nonprofit research center in Berkeley working to make sure AI doesn&rsquo;t kill a lot of people and concentrate power and wealth into the hands of a few.</li>
+    <li>Research Programs at <a href="https://constellation.org/">Constellation Institute</a>, an independent nonprofit research center in Berkeley working to make sure AI doesn&rsquo;t kill a lot of people or concentrate power and wealth into the hands of a few.</li>
     <li>Producing <a href="https://madeforyoufilm.com/"><i>Made For You</i></a>, a documentary about humans in romantic love with an AI companion. Releasing in 2027.</li>
     <li>Volunteer with <a href="https://ibme.com/">Inward Bound Mindfulness Education</a>, a national nonprofit running meditation retreats for teenagers in the Insight lineage.</li>
     <li>UCLA, MIT, and Engaged Mindfulness Institute alumnus.</li>
@@ -106,7 +106,7 @@
   <p class="contact">
     <a href="https://www.linkedin.com/in/josdewolk/">LinkedIn</a><br>
     <a href="https://medium.com/@josdewolk">Medium</a><br>
-    <a id="note" href="#">Send me a note</a>
+    <a href="mailto:strangerontheinternet@josephdewolk.com">Send me a note</a>
   </p>
 </main>
 
@@ -414,12 +414,6 @@
     draw(now); report();
     if (st.p < 1) requestAnimationFrame(tick);
   }
-
-  /* the address, assembled here so it never sits in the page for robots to read */
-  document.getElementById('note').addEventListener('click', e => {
-    e.preventDefault();
-    location.href = 'mailto:' + ['jdewolk', 'gmail.com'].join('@');
-  });
 
   load();
   applyPalette(store.get('jd-palette') || 'pink');
