@@ -21,8 +21,7 @@
     --ink: #46688F;  /* blue */
   }
   * { box-sizing: border-box; }
-  html { background: var(--bg); color: var(--ink); transition: background .6s, color .6s; }
-  html { font-size: 18px; }
+  html { font-size: 18px; background: var(--bg); color: var(--ink); transition: background .6s, color .6s; }
   body {
     margin: 0;
     font: 1rem/1.55 Georgia, "Times New Roman", Times, serif;
@@ -68,7 +67,6 @@
   }
   .swatches button span { flex: 1; }
   .swatches button[aria-pressed="true"] { outline: 1px solid var(--ink); outline-offset: 3px; }
-
 
   /* neon only: three little rays at each end of the name, hanging into the margin */
   html[data-palette="highlighter"] h1::before,
@@ -156,29 +154,30 @@
     buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.p === name));
     root.dataset.palette = name;
     store.set('jd-palette', name);
-    if (render) size(); else draw();
+    draw();
   }
   buttons.forEach(b => b.addEventListener('click', () => applyPalette(b.dataset.p)));
 
   /* ---------- the wall drawings ----------
      EDIT THE INSTRUCTIONS HERE. Each drawing: its number, canvas height (px),
-     the instruction text, and the routine that carries it out.
+     how long it takes (seconds), the instruction text, and the routine that
+     carries it out.
      Preview one by adding #wd=3 (etc.) to the URL.                        */
   const DRAWINGS = [
     { n: 1, h: 90,  dur: 240, make: line,
       text: 'Draw a line, not straight, from the left edge to the right edge, slowly, as if by hand.' },
     { n: 2, h: 300, dur: 240, make: circles,
       text: 'Draw a circle over minutes. If it does not close, leave it. Then draw another one inside the last. Do this until the last circle drawn is just a dot, then stop.' },
-    { n: 3, h: 300, dur: 83,  make: grid,
-      text: 'Draw a grid of forty-two squares. Fill in one square every second, at random. Then remove one every second until only one is left.' },
-    { n: 4, h: 260, dur: 600, make: blackout,
+    { n: 3, h: 300, dur: 166, make: grid,
+      text: 'Draw a grid of forty-two squares. Fill in one square every two seconds, at random. Then remove one every two seconds until only one is left.' },
+    { n: 4, h: 260, dur: null, make: blackout,   // sets its own pace: 3 lines a second
       text: 'Draw short straight lines, one at a time, in any direction, as if by hand. Begin the next line close to the end of the last one but not touching. Continue until the wall is black.' },
     { n: 5, h: 260, dur: 240, make: corners,
       text: 'Draw lines from the four corners toward the center. Slow down as they approach. Do not let them meet. Then draw each line to a different corner from where it started.' },
-    { n: 6, h: 260, dur: 240, make: stack,
+    { n: 6, h: 260, dur: 480, make: stack,
       text: 'Draw horizontal lines, stacked very closely. Each subsequent line is a little more freehand than the previous line. Stop when any line touches the bottom of the frame.' }
   ];
-  const KEY = 'jd-walls-v3';
+  const KEY = 'jd-last-drawing';
   const TAU = Math.PI * 2;
 
   const canvas = document.getElementById('wall');
@@ -262,7 +261,7 @@
       for (let i = 0; i <= cols; i++) { ctx.moveTo(x0 + i * c, y0); ctx.lineTo(x0 + i * c, y0 + rows * c); }
       for (let i = 0; i <= rows; i++) { ctx.moveTo(x0, y0 + i * c); ctx.lineTo(x0 + cols * c, y0 + i * c); }
       ctx.stroke();
-      const s = p * (2 * n - 1);                      // one second per square, filling then emptying
+      const s = p * (2 * n - 1);                      // one step per square, filling then emptying
       if (s < n) {
         const k = Math.floor(s);
         for (let i = 0; i < k; i++) cell(fill[i], 1);
@@ -315,10 +314,14 @@
     const dpr = window.devicePixelRatio || 1, buf = document.createElement('canvas');
     buf.width = Math.round(W * dpr); buf.height = Math.round(H * dpr);
     const b = buf.getContext('2d'); b.setTransform(dpr, 0, 0, dpr, 0, 0);
-    b.strokeStyle = inkNow(); b.fillStyle = inkNow(); b.lineWidth = LW; b.lineCap = 'round'; b.lineJoin = 'round';
-    let drawn = 0;
-    return (p, t) => {
+    b.lineWidth = LW; b.lineCap = 'round'; b.lineJoin = 'round';
+    let drawn = 0, ink = null;
+    const fn = (p, t) => {
       const want = Math.floor(p * segs.length);
+      if (ink !== inkNow()) {                         // new palette: repaint what's drawn in the new ink
+        ink = b.strokeStyle = b.fillStyle = inkNow();
+        b.clearRect(0, 0, W, H); drawn = 0;
+      }
       for (; drawn < want; drawn++) {
         const [ax, ay, mx, my, bx, by] = segs[drawn];
         b.beginPath(); b.moveTo(ax, ay); b.quadraticCurveTo(mx, my, bx, by); b.stroke();
@@ -327,6 +330,8 @@
       ctx.drawImage(buf, 0, 0, W, H);
       if (p < 1 && drawn > 0) { const s = segs[drawn - 1]; pen(s[4], s[5], t); }
     };
+    fn.dur = segs.length / 3;                                          // a steady 3 lines a second, at any size
+    return fn;
   }
   /* #5 */
   function corners(r, W, H) {
@@ -372,26 +377,16 @@
   }
 
   /* ---------- which drawing, and how far along ---------- */
-  let S = store.get(KEY);
-  if (!S || typeof S !== 'object' || !S.d) S = { cur: null, d: {} };
   const byN = n => DRAWINGS.find(d => d.n === n);
   const forced = byN(+((location.hash.match(/wd=(\d+)/) || [])[1]));
+  const lastSeen = store.get(KEY);
+  const pool = DRAWINGS.filter(d => d.n !== lastSeen);   // a new drawing every visit, never the last one twice
+  const D = forced || pool[Math.floor(Math.random() * pool.length)];
+  store.set(KEY, D.n);
+  const st = { seed: newSeed(), p: still ? 1 : 0 };
 
-  function start(d) {
-    S.cur = d.n; S.d[d.n] = { seed: newSeed(), p: 0 };
-  }
-  function pickNew() {
-    const pool = DRAWINGS.filter(d => d.n !== S.cur);
-    start(pool[Math.floor(Math.random() * pool.length)]);
-  }
-  if (forced) start(forced);
-  else pickNew();                      // a new drawing every visit, never the last one twice
-  store.set(KEY, S);
-
-  let D, st, render, W = 0, H = 0;
+  let render, W = 0, H = 0;
   function load() {
-    D = byN(S.cur); st = S.d[S.cur];
-    if (still) st.p = 1;
     titleEl.textContent = 'Wall Drawing #' + D.n;
     textEl.textContent = D.text;
     size();
@@ -408,7 +403,7 @@
   }
   function draw(now = performance.now()) {
     if (!render) return;
-    const ink = getComputedStyle(root).getPropertyValue('--ink').trim();
+    const ink = inkNow();
     ctx.clearRect(0, 0, W, H);
     ctx.strokeStyle = ink; ctx.fillStyle = ink;
     ctx.lineWidth = 1.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
@@ -427,7 +422,7 @@
   function tick(now) {
     const dt = Math.min((now - last) / 1000, 0.25);   // a hidden tab doesn't count
     last = now;
-    st.p = Math.min(1, st.p + dt / D.dur);
+    st.p = Math.min(1, st.p + dt / ((render && render.dur) || D.dur));
     draw(now); report();
     if (st.p < 1) requestAnimationFrame(tick);
   }
