@@ -109,7 +109,7 @@
     <li>Producing <a href="https://madeforyoufilm.com/"><i>Made For You</i></a>, a documentary about humans in romantic love with an AI companion. Releasing in 2027.</li>
     <li>Volunteer with <a href="https://ibme.com/">Inward Bound Mindfulness Education</a>, a national nonprofit running meditation retreats for teens in the Insight lineage.</li>
     <li>UCLA, MIT, and Engaged Mindfulness Institute alum.</li>
-    <li>My favorite things include surfing, chess, great books (especially used copies), theology, Bahasa Indonesia, Mumbai local trains, mindfulness and meditation, playing soccer, East Bay history and culture, political organizing, Michel de Montaigne, redwood trees, Sol LeWitt, public narrative and storytelling, and Curtis Mayfield.</li>
+    <li id="favs">My favorite things include surfing, chess, great books (especially used copies), theology, Bahasa Indonesia, Mumbai local trains, mindfulness and meditation, playing soccer, East Bay history and culture, political organizing, Michel de Montaigne, redwood trees, Sol LeWitt, public narrative and storytelling, and Curtis Mayfield.</li>
   </ul>
 
   <p class="contact">
@@ -425,6 +425,22 @@
     st.p = Math.min(1, st.p + dt / ((render && render.dur) || D.dur));
     draw(now); report();
     if (st.p < 1) requestAnimationFrame(tick);
+  }
+
+  /* ---------- one favorite thing goes missing each visit ----------
+     The full list lives in the page itself (edit it there). On each visit one item
+     is left out at random, never the same one twice in a row, and the sentence is
+     re-punctuated. With scripts off, visitors see the whole list.               */
+  const favs = document.getElementById('favs');
+  const m = favs && favs.textContent.trim().match(/^(.*?include )(.*)\.$/);
+  if (m) {
+    const items = m[2].split(/, (?:and )?/);
+    const lastHidden = store.get('jd-last-hidden');
+    const choices = items.filter(t => t !== lastHidden);
+    const hidden = choices[Math.floor(Math.random() * choices.length)];
+    store.set('jd-last-hidden', hidden);
+    const shown = items.filter(t => t !== hidden);
+    favs.textContent = m[1] + shown.slice(0, -1).join(', ') + ', and ' + shown[shown.length - 1] + '.';
   }
 
   load();
